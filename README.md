@@ -21,6 +21,8 @@ To run the preprocessing (As M3DM)
 python utils/preprocess_eyecandies.py
 python utils/preprocessing.py datasets/mvtec3d/
 ```
+## Checkpoints
+You can download ViT-b/8 at [M3DM](https://github.com/nomewang/M3DM)
 ## Run our method 
 ```bash
 nohup stdbuf -oL -eL python3.8 main.py --method_name DINO+FPFH+add+late > 3080DINODFPFHaddenlog.txt 2>&1 & 
