@@ -1,4 +1,5 @@
 # Density-Augmented Adaptive Feature Representation for Multimodal Detection of Industrial Subtle Defects (Under review at The Visual Computer)
+If you find this work useful, please cite the manuscript upon publication.
 ## Setup
 We implement this repo with the following environment:
 - Python 3.8
@@ -31,4 +32,5 @@ nohup stdbuf -oL -eL python3.8 main.py --method_name DINO+FPFH+add+late > 3080DI
 ## Thanks
 Our repo is built on [3D-ADS](https://github.com/eliahuhorwitz/3D-ADS) and [M3DM](https://github.com/nomewang/M3DM), thanks their extraordinary works!
  
+
 
