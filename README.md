@@ -1,37 +1,147 @@
-# Density-Augmented Multimodal Detection for Industrial Subtle Defects (Under review at The Visual Computer)
-If you find this work useful, please cite the manuscript upon publication.
-## Setup
-We implement this repo with the following environment:
-- Python 3.8
-Install the other package via:
-``` bash
-pip install -r requirement.txt
-# install knn_cuda
-pip install --upgrade https://github.com/unlimblue/KNN_CUDA/releases/download/0.2/KNN_CUDA-0.2-py3-none-any.whl
-# install pointnet2_ops_lib
-pip install "git+git://github.com/erikwijmans/Pointnet2_PyTorch.git#egg=pointnet2_ops&subdirectory=pointnet2_ops_lib"
-```
-## Data Download and Preprocess
-### Dataset
-- The `MVTec-3D AD` dataset can be download from the [Official Website of MVTec-3D AD](https://www.mvtec.com/company/research/datasets/mvtec-3d-ad). 
-- The `Eyecandies` dataset can be download from the [Official Website of Eyecandies](https://eyecan-ai.github.io/eyecandies/). 
-After download, put the dataset in `dataset` folder.
-### Datapreprocess
-To run the preprocessing (As M3DM)
+# Density-Augmented Multimodal Detection for Industrial Subtle Defects (DAMD)
+
+This repository contains the official implementation used in the paper under review at *The Visual Computer*.
+
+Code, evaluation scripts, configuration files, revision-analysis scripts, and reproducibility documentation are publicly available in this repository. Zenodo archival metadata is provided via `CITATION.cff` and `.zenodo.json`; after a GitHub release is created, a DOI-backed archival snapshot can be minted and cited in the manuscript.
+
+## What is included
+
+- `main.py`: primary evaluation entrypoint for DAMD.
+- `configs/`: reproducibility configs for MVTec 3D-AD and Eyecandies.
+- `scripts/run_reproduction.py`: one-command reproduction wrapper.
+- `scripts/reproduce_mvtec3d.sh` and `scripts/reproduce_eyecandies.sh`: dataset-specific wrappers.
+- `REPRODUCIBILITY.md`: exact reproduction workflow and checklist.
+- `revision_materials/`: generated EAF analysis tables, figures, and run instructions used for revision.
+- `experiments/revision/`: scripts for revision experiments (EAF analysis, robustness, efficiency).
+- `checkpoints/README.md`: checkpoint manifest and placement rules.
+
+## Why DAMD is useful
+
+DAMD targets subtle industrial defect detection under multimodal RGB-3D input. It stays lightweight because the main paper setting does not require a heavy pretrained 3D backbone during inference, improves subtle defect localization on public datasets, exposes interpretable modality-weight behavior through the EAF analysis, and can be reproduced on public MVTec 3D-AD and Eyecandies data with the scripts and configs provided here.
+
+## Environment setup
+
+We recommend reproducing the experiments with the exact environment captured from the original server.
+
+### Option A: Conda environment (recommended)
+
 ```bash
-python utils/preprocess_eyecandies.py
-python utils/preprocessing.py datasets/mvtec3d/
+conda env create -f environment.yml
+conda activate damd
 ```
+
+### Option B: Pip lockfile
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements-lock.txt
+```
+
+The original experiments were run with Python 3.8.20, torch 1.10.0, torchvision 0.11.1, timm 0.9.12, and open3d 0.10.0.0.
+
+## Datasets
+
+### MVTec 3D-AD
+
+- Official source: <https://www.mvtec.com/company/research/datasets/mvtec-3d-ad>
+- DAMD uses the official category split distributed by the dataset authors.
+- Preprocessing is performed in place:
+
+```bash
+python utils/preprocessing.py /path/to/mvtec3d
+```
+
+### Eyecandies
+
+- Official source: <https://eyecan-ai.github.io/eyecandies/>
+- DAMD uses the official train/test split distributed by the dataset authors.
+- Convert the raw release into the DAMD directory layout with:
+
+```bash
+python utils/preprocess_eyecandies.py \
+  --dataset_path /path/to/Eyecandies \
+  --target_dir /path/to/eyecandies_preprocessed
+```
+
+The datasets are not redistributed here because they remain subject to their original licenses and access conditions.
+
 ## Checkpoints
-You can download ViT-b/8 at [M3DM](https://github.com/nomewang/M3DM)
-## Run our method 
+
+Place the required checkpoints under `checkpoints/`:
+
+- `checkpoints/dino_vitbase8_pretrain.pth`
+- `checkpoints/uff_pretrain.pth` (only required when UFF-based runs are enabled)
+
+See `checkpoints/README.md` and `checkpoints/checksums.sha256` for provenance and checksum details.
+
+## One-command reproduction
+
+### MVTec 3D-AD
+
 ```bash
-nohup stdbuf -oL -eL python3.8 main.py --method_name DINO+FPFH+add+late > 3080DINODFPFHaddenlog.txt 2>&1 & 
+bash scripts/reproduce_mvtec3d.sh /path/to/mvtec3d
 ```
-(This framework also includes methods for our failed attempts, which can be ignored.)
-## Thanks
-Our repo is built on [3D-ADS](https://github.com/eliahuhorwitz/3D-ADS) and [M3DM](https://github.com/nomewang/M3DM), thanks their extraordinary works!
- 
 
+### Eyecandies
 
+```bash
+bash scripts/reproduce_eyecandies.sh /path/to/Eyecandies /path/to/eyecandies_preprocessed
+```
 
+These wrappers validate required paths, optionally preprocess the data, and launch the exact config-backed pipeline:
+
+```bash
+python scripts/run_reproduction.py --config configs/mvtec3d_reproduction.yaml
+python scripts/run_reproduction.py --config configs/eyecandies_reproduction.yaml
+```
+
+## Main evaluation command
+
+The primary paper setting is:
+
+```bash
+python main.py \
+  --method_name DINO+FPFH+add+late \
+  --dataset_type mvtec3d \
+  --dataset_path /path/to/mvtec3d \
+  --rgb_backbone_checkpoint checkpoints/dino_vitbase8_pretrain.pth \
+  --results_dir results/mvtec3d
+```
+
+For Eyecandies, replace `--dataset_type` and `--dataset_path` accordingly.
+
+## Reproducibility artifacts
+
+This repository includes:
+
+- exact environment files (`environment.yml`, `requirements-lock.txt`)
+- reproducibility configs (`configs/*.yaml`)
+- dataset preprocessing scripts (`utils/preprocessing.py`, `utils/preprocess_eyecandies.py`)
+- evaluation entrypoint (`main.py`)
+- revision-analysis scripts (`experiments/revision/`)
+- checkpoint manifest and checksums (`checkpoints/`)
+- reproducibility checklist and reviewer-facing summary (`REPRODUCIBILITY.md`, `REVIEWER_RESPONSE_AND_WORK_SUMMARY.md`)
+
+## Revision materials
+
+The repository contains the generated EAF revision assets under:
+
+- `revision_materials/eaf_analysis/`
+- `revision_materials/eaf_analysis_smoke/`
+- `supp_response_20260615_eaf_figure/`
+
+These folders include figures, tables, logs, and writing materials referenced in the revision response.
+
+## Citation and archival release
+
+The repository includes release metadata for Zenodo and GitHub citation support:
+
+- `CITATION.cff`
+- `.zenodo.json`
+
+After creating a GitHub release, Zenodo can mint a DOI-backed archival snapshot. The DOI should then be added to the manuscript and README.
+
+## Acknowledgements
+
+This repository builds on ideas and components from [3D-ADS](https://github.com/eliahuhorwitz/3D-ADS) and [M3DM](https://github.com/nomewang/M3DM). We thank the original authors for releasing their code.
