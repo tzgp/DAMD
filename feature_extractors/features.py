@@ -34,6 +34,7 @@ class Features(torch.nn.Module):
         self.deep_feature_extractor = Model(
                                 device=self.device, 
                                 rgb_backbone_name=args.rgb_backbone_name, 
+                                checkpoint_path=args.rgb_backbone_checkpoint,
                                 xyz_backbone_name=args.xyz_backbone_name, 
                                 group_size = args.group_size, 
                                 num_group=args.num_group

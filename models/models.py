@@ -4,6 +4,7 @@ import timm
 from timm.models.layers import DropPath, trunc_normal_
 from pointnet2_ops import pointnet2_utils
 from knn_cuda import KNN
+from pathlib import Path
 
 class Model(torch.nn.Module):
 
@@ -19,10 +20,21 @@ class Model(torch.nn.Module):
             kwargs.update({'out_indices': out_indices})
 
         ## RGB backbone
-        self.rgb_backbone = timm.create_model(model_name=rgb_backbone_name, pretrained=True,
-                                              pretrained_cfg_overlay=dict(
-                                                  file='/home/zgp/Documents/M3DM_5_3080/dino_vitbase8_pretrain.pth'),
-                                              **kwargs)
+        checkpoint = Path(checkpoint_path).expanduser() if checkpoint_path else None
+        if checkpoint:
+            if not checkpoint.exists():
+                raise FileNotFoundError(
+                    f"RGB backbone checkpoint not found: {checkpoint}. "
+                    "Pass --rgb_backbone_checkpoint or set DAMD_RGB_BACKBONE_CHECKPOINT."
+                )
+            self.rgb_backbone = timm.create_model(
+                model_name=rgb_backbone_name,
+                pretrained=True,
+                pretrained_cfg_overlay=dict(file=str(checkpoint)),
+                **kwargs,
+            )
+        else:
+            self.rgb_backbone = timm.create_model(model_name=rgb_backbone_name, pretrained=True, **kwargs)
         print("self.rgb_backbone:",self.rgb_backbone)
         # XYZ backbone
 
