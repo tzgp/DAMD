@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: "Density-Augmented Multimodal Detection for Industrial Subtle Defects (DAMD)"
+message: "If you use this repository, please cite the paper and the software release."
+type: software
+version: 1.0.0
+license: MIT
+abstract: "Official DAMD implementation with reproducibility scripts, configs, revision analyses, and evaluation utilities for MVTec 3D-AD and Eyecandies."
+authors:
+  - family-names: Tao
+    given-names: Zhi-Guo
+affiliation: "Please update author metadata before public archival release"
+keywords:
+  - anomaly detection
+  - industrial inspection
+  - mvtec 3d-ad
+  - eyecandies
+  - multimodal learning
+repository-code: "https://github.com/tzgp/DAMD"
