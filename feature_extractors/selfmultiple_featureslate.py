@@ -34,18 +34,14 @@ class DoubleRGBFPFHFeatures_add_late(Features):
         probabilities = F.softmax(output, dim=0)
         #log_probabilities = torch.log(probabilities)
         log_probabilities = F.log_softmax(output, dim=0)
-        print(f"log_probabilities: {log_probabilities}")
         entropy = -torch.sum(probabilities * log_probabilities)
         return entropy
     def calculate_gating_weights(self, encoder_output_1, encoder_output_2):
         entropy_1 = np.log(self.calculate_entropy(encoder_output_1))
         entropy_2 = np.log(self.calculate_entropy(encoder_output_2))
-        print(f"Entropy 1: {entropy_1}, Entropy 2: {entropy_2}")
         sum_weights = entropy_1 + entropy_2
-        print(f"sum_weights: {sum_weights}")
         entropy_1 /= sum_weights
         entropy_2 /= sum_weights
-        print(f"Entropy 1: {entropy_1}, Entropy 2: {entropy_2}")
         return entropy_1, entropy_2
     def l2_normalize(self,features):
         norms = np.linalg.norm(features, axis=0, keepdims=True)
@@ -242,7 +238,6 @@ class DoubleRGBFPFHFeatures_add_late(Features):
             [k4, idx, _] = kdtree.search_radius_vector_3d(o3d_pc.points[i], voxel_size * 0.15)
             densities4[i] = k4  # 邻域内点的数量作为密度
 
-        print("densities", densities, densities2, densities3, densities4)
         fpfh_with_density = np.zeros((fpfh.shape[0], fpfh.shape[1] + 4))
         print("fpfh.shape", fpfh.shape)
         print("fpfh_with_density.shape", fpfh_with_density.shape)
@@ -679,7 +674,6 @@ class DoubleRGBFPFHFeatures_add_late(Features):
         xyz_conf,rgb_conf = self.calculate_gating_weights(xyz_patch, rgb_patch)
 
         s = (xyz_conf * s_xyz + s_rgb* rgb_conf)
-        print("xyz_conf, rgb_conf,s",xyz_conf, rgb_conf,s)
         s_map = (xyz_conf *s_map_xyz + s_map_rgb* rgb_conf)
         s_map = s_map.view(1, self.image_size, self.image_size)
         self.image_preds.append(s.numpy())
