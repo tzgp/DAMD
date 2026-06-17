@@ -7,6 +7,14 @@ import yaml
 import imageio.v3 as iio
 import math
 import argparse
+from pathlib import Path
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from path_defaults import default_dataset_root, resolve_repo_path
 
 # The same camera has been used for all the images
 FOCAL_LENGTH = 711.11
@@ -89,11 +97,11 @@ def remove_point_cloud_background(pc):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Process some integers.')
-    parser.add_argument('--dataset_path', default='/home/code_project/zgp/Eyedataset/Eyecandies', type=str, help="Original Eyecandies dataset path.")
-    parser.add_argument('--target_dir', default='/home/code_project/zgp/Eyedataset/Eyecandies_preprocessed', type=str, help="Processed Eyecandies dataset path")
+    parser.add_argument('--dataset_path', default=str(default_dataset_root('eyecandies')), type=str, help="Original Eyecandies dataset path.")
+    parser.add_argument('--target_dir', default=str(resolve_repo_path('datasets/eyecandies_preprocessed')), type=str, help="Processed Eyecandies dataset path")
     args = parser.parse_args()
-    
-    os.mkdir(args.target_dir)
+
+    Path(args.target_dir).mkdir(parents=True, exist_ok=True)
     categories_list = os.listdir(args.dataset_path)
 
     for category_dir in categories_list:
@@ -105,33 +113,33 @@ if __name__ == '__main__':
         print(" category_test_path", category_test_path)
 
         category_target_path = os.path.join(args.target_dir, category_dir)
-        os.mkdir(category_target_path)
+        os.makedirs(category_target_path, exist_ok=True)
 
-        os.mkdir(os.path.join(category_target_path, 'train'))
+        os.makedirs(os.path.join(category_target_path, 'train'), exist_ok=True)
         category_target_train_good_path = os.path.join(category_target_path, 'train/good')
         category_target_train_good_rgb_path = os.path.join(category_target_train_good_path, 'rgb')
         category_target_train_good_xyz_path = os.path.join(category_target_train_good_path, 'xyz')
-        os.mkdir(category_target_train_good_path)
-        os.mkdir(category_target_train_good_rgb_path)
-        os.mkdir(category_target_train_good_xyz_path)
+        os.makedirs(category_target_train_good_path, exist_ok=True)
+        os.makedirs(category_target_train_good_rgb_path, exist_ok=True)
+        os.makedirs(category_target_train_good_xyz_path, exist_ok=True)
 
-        os.mkdir(os.path.join(category_target_path, 'test'))
+        os.makedirs(os.path.join(category_target_path, 'test'), exist_ok=True)
         category_target_test_good_path = os.path.join(category_target_path, 'test/good')
         category_target_test_good_rgb_path = os.path.join(category_target_test_good_path, 'rgb')
         category_target_test_good_xyz_path = os.path.join(category_target_test_good_path, 'xyz')
         category_target_test_good_gt_path = os.path.join(category_target_test_good_path, 'gt')
-        os.mkdir(category_target_test_good_path)
-        os.mkdir(category_target_test_good_rgb_path)
-        os.mkdir(category_target_test_good_xyz_path)
-        os.mkdir(category_target_test_good_gt_path)
+        os.makedirs(category_target_test_good_path, exist_ok=True)
+        os.makedirs(category_target_test_good_rgb_path, exist_ok=True)
+        os.makedirs(category_target_test_good_xyz_path, exist_ok=True)
+        os.makedirs(category_target_test_good_gt_path, exist_ok=True)
         category_target_test_bad_path = os.path.join(category_target_path, 'test/bad')
         category_target_test_bad_rgb_path = os.path.join(category_target_test_bad_path, 'rgb')
         category_target_test_bad_xyz_path = os.path.join(category_target_test_bad_path, 'xyz')
         category_target_test_bad_gt_path = os.path.join(category_target_test_bad_path, 'gt')
-        os.mkdir(category_target_test_bad_path)
-        os.mkdir(category_target_test_bad_rgb_path)
-        os.mkdir(category_target_test_bad_xyz_path)
-        os.mkdir(category_target_test_bad_gt_path)
+        os.makedirs(category_target_test_bad_path, exist_ok=True)
+        os.makedirs(category_target_test_bad_rgb_path, exist_ok=True)
+        os.makedirs(category_target_test_bad_xyz_path, exist_ok=True)
+        os.makedirs(category_target_test_bad_gt_path, exist_ok=True)
 
         category_train_files = os.listdir(category_train_path)
         num_train_files = len(category_train_files)//17
