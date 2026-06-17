@@ -12,6 +12,16 @@ from SSLspot_runner import SSLspot
 # from m3dmdic_runner import M3DMDIC
 import psutil
 import os
+from pathlib import Path
+
+from path_defaults import (
+    default_dataset_root,
+    default_feature_cache,
+    default_fusion_checkpoint,
+    default_results_dir,
+    default_rgb_checkpoint,
+    default_ssl_checkpoint,
+)
 
 
 def get_memory_comparison():
@@ -32,6 +42,8 @@ def get_memory_comparison():
 
 
 def run_3d_ads(args):
+    results_dir = Path(args.results_dir)
+    results_dir.mkdir(parents=True, exist_ok=True)
     if args.dataset_type=='eyecandies':
         classes = eyecandies_classes()
     elif args.dataset_type=='mvtec3d':
@@ -84,16 +96,16 @@ def run_3d_ads(args):
     print("############################# AU PRO Results #############################")
     print("##########################################################################\n")
     print(au_pros_df.to_markdown(index=False))
-    with open("results/image_rocauc_results.md", "a") as tf:
+    with open(results_dir / "image_rocauc_results.md", "a") as tf:
         tf.write(image_rocaucs_df.to_markdown(index=False))
-    with open("results/pixel_rocauc_results.md", "a") as tf:
+    with open(results_dir / "pixel_rocauc_results.md", "a") as tf:
         tf.write(pixel_rocaucs_df.to_markdown(index=False))
-    with open("results/aupro_results.md", "a") as tf:
+    with open(results_dir / "aupro_results.md", "a") as tf:
         tf.write(au_pros_df.to_markdown(index=False))
     # 合并所有DataFrame
     combined_df = pd.concat([image_rocaucs_df, pixel_rocaucs_df, au_pros_df], ignore_index=True)
     # 将合并后的DataFrame保存为CSV文件
-    combined_df.to_csv('m3dm_5_DoubleRGBFPFHFeatures_add_results.csv', index=False)
+    combined_df.to_csv(results_dir / 'm3dm_5_DoubleRGBFPFHFeatures_add_results.csv', index=False)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('--method_name', default='DINO+Point_MAE+Fusion', type=str,
@@ -107,9 +119,11 @@ if __name__ == '__main__':
     parser.add_argument('--rgb_backbone_name', default='vit_base_patch8_224_dino', type=str, 
                         choices=['vit_base_patch8_224_dino', 'vit_base_patch8_224', 'vit_base_patch8_224_in21k', 'vit_small_patch8_224_dino'],
                         help='Timm checkpoints name of RGB backbone.')
+    parser.add_argument('--rgb_backbone_checkpoint', default=str(default_rgb_checkpoint()), type=str,
+                        help='Path to the RGB backbone checkpoint. Defaults to checkpoints/dino_vitbase8_pretrain.pth or DAMD_RGB_BACKBONE_CHECKPOINT.')
     parser.add_argument('--xyz_backbone_name', default='Point_MAE', type=str, choices=['Point_MAE', 'Point_Bert'],
                         help='Checkpoints name of RGB backbone[Point_MAE, Point_Bert].')
-    parser.add_argument('--fusion_module_path', default='/home/zgp/Documents/M3DM_5_3080/uff_pretrain.pth', type=str,
+    parser.add_argument('--fusion_module_path', default=str(default_fusion_checkpoint()), type=str,
                         help='Checkpoints for fusion module.')
     parser.add_argument('--save_feature', default=False, action='store_true',
                         help='Save feature for training fusion block.')
@@ -119,6 +133,8 @@ if __name__ == '__main__':
                         help='Use UFF module.')
     parser.add_argument('--use_ssl', default=False, action='store_true',
                         help='Use ssl module.')
+    parser.add_argument('--ssl_module_path', default=str(default_ssl_checkpoint()), type=str,
+                        help='Path to the SSL module checkpoint when --use_ssl is enabled.')
     parser.add_argument('--save_preds', default=True, action='store_true',
                         help='Save predicts results.')
     parser.add_argument('--group_size', default=128, type=int,
@@ -135,10 +151,12 @@ if __name__ == '__main__':
     #                     help='Save feature for training fusion block.')
     parser.add_argument('--dataset_type', default='mvtec3d', type=str, choices=['mvtec3d', 'eyecandies'],
                         help='Dataset type for training or testing')
-    parser.add_argument('--dataset_path', default='/home/zgp/Documents/m3dmpre/datasets/mvtec3d', type=str,
+    parser.add_argument('--dataset_path', default=str(default_dataset_root('mvtec3d')), type=str,
                         help='Dataset store path')
-    parser.add_argument('--save_feature_path', default='/home/c1/zgp/datasets/patch_libDFPFHDINO', type=str,
+    parser.add_argument('--save_feature_path', default=str(default_feature_cache('mvtec3d')), type=str,
                         help='Save feature for training fusion block.')
+    parser.add_argument('--results_dir', default=str(default_results_dir()), type=str,
+                        help='Directory used for markdown tables and CSV result exports.')
     # parser.add_argument('--dataset_path', default='/home/code_project/zgp/Eyedataset/Eyecandies_preprocessed', type=str,
     #                     help='Dataset store path')
     parser.add_argument('--img_size', default=224, type=int,
