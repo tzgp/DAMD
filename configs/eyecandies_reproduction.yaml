@@ -1,0 +1,39 @@
+dataset:
+  name: eyecandies
+  raw_path: datasets/eyecandies_raw
+  processed_path: datasets/eyecandies_preprocessed
+  preprocess: true
+
+checkpoints:
+  rgb_backbone_checkpoint: checkpoints/dino_vitbase8_pretrain.pth
+  fusion_module_path: checkpoints/uff_pretrain.pth
+
+outputs:
+  results_dir: results/eyecandies
+  log_path: results/logs/eyecandies_reproduction.log
+  save_feature_path: outputs/feature_cache/eyecandies
+
+run:
+  method_name: DINO+FPFH+add+late
+  dataset_type: eyecandies
+  max_sample: 400
+  memory_bank: single
+  img_size: 224
+  rgb_backbone_name: vit_base_patch8_224_dino
+  xyz_backbone_name: Point_MAE
+  use_uff: false
+  use_trans: true
+  use_ssl: false
+  save_preds: true
+  group_size: 128
+  num_group: 1024
+  xyz_s_lambda: 1.0
+  xyz_smap_lambda: 1.0
+  rgb_s_lambda: 0.1
+  rgb_smap_lambda: 0.1
+  fusion_s_lambda: 1.0
+  fusion_smap_lambda: 1.0
+  coreset_eps: 0.9
+  f_coreset: 0.1
+  ocsvm_nu: 0.5
+  ocsvm_maxiter: 1000
