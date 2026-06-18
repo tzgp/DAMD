@@ -8,7 +8,7 @@ abstract: "Official DAMD implementation with reproducibility scripts, configs, r
 authors:
   - family-names: Zhu
     given-names: Guiping
-affiliation: "Please update author metadata before public archival release"
+affiliation: "Guiping Zhu"
 keywords:
   - anomaly detection
   - industrial inspection
