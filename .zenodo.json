@@ -1,7 +1,7 @@
 {
-  "title": "Density-Augmented Multimodal Detection for Industrial Subtle Defects (DAMD)",
+  "title": "DAMD: Density-Augmented RGB-3D Fusion for Subtle Industrial Defect Detection",
   "upload_type": "software",
-  "description": "Official DAMD implementation with reproducibility scripts, configs, and evaluation utilities for MVTec 3D-AD and Eyecandies.",
+  "description": "Official implementation of DAMD: Density-Augmented RGB-3D Fusion for Subtle Industrial Defect Detection.",
   "license": "mit",
   "access_right": "open",
   "language": "eng",

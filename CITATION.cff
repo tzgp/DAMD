@@ -1,10 +1,10 @@
 cff-version: 1.2.0
-title: "Density-Augmented Multimodal Detection for Industrial Subtle Defects (DAMD)"
+title: "DAMD: Density-Augmented RGB-3D Fusion for Subtle Industrial Defect Detection"
 message: "If you use this repository, please cite the paper and the software release."
 type: software
 version: 1.0.0
 license: MIT
-abstract: "Official DAMD implementation with reproducibility scripts, configs, revision analyses, and evaluation utilities for MVTec 3D-AD and Eyecandies."
+abstract: "Official implementation of DAMD: Density-Augmented RGB-3D Fusion for Subtle Industrial Defect Detection."
 authors:
   - family-names: Zhu
     given-names: Guiping

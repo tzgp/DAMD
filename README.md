@@ -1,8 +1,8 @@
-# Density-Augmented Multimodal Detection for Industrial Subtle Defects (DAMD)
+# DAMD: Density-Augmented RGB-3D Fusion for Subtle Industrial Defect Detection
 
 This repository contains the official implementation used in the paper under review at *The Visual Computer*.
 
-Code, evaluation scripts, configuration files, revision-analysis scripts, and reproducibility documentation are publicly available in this repository. Zenodo archival metadata is provided via `CITATION.cff` and `.zenodo.json`; after a GitHub release is created, a DOI-backed archival snapshot can be minted and cited in the manuscript.
+Code, evaluation scripts, configuration files, and reproducibility documentation are publicly available in this repository. Zenodo archival metadata is provided via `CITATION.cff` and `.zenodo.json`; after a GitHub release is created, a DOI-backed archival snapshot can be minted and cited in the manuscript.
 
 ## What is included
 
@@ -11,7 +11,6 @@ Code, evaluation scripts, configuration files, revision-analysis scripts, and re
 - `scripts/run_reproduction.py`: one-command reproduction wrapper.
 - `scripts/reproduce_mvtec3d.sh` and `scripts/reproduce_eyecandies.sh`: dataset-specific wrappers.
 - `REPRODUCIBILITY.md`: exact reproduction workflow and checklist.
-- `revision_materials/`: generated EAF analysis tables, figures, and run instructions used for revision.
 - `experiments/revision/`: scripts for revision experiments (EAF analysis, robustness, efficiency).
 - `checkpoints/README.md`: checkpoint manifest and placement rules.
 
@@ -121,15 +120,9 @@ This repository includes:
 - checkpoint manifest and checksums (`checkpoints/`)
 - reproducibility checklist and reviewer-facing summary (`REPRODUCIBILITY.md`, `REVIEWER_RESPONSE_AND_WORK_SUMMARY.md`)
 
-## Revision materials
+## Revision analysis scripts
 
-The repository contains the generated EAF revision assets under:
-
-- `revision_materials/eaf_analysis/`
-- `revision_materials/eaf_analysis_smoke/`
-- `supp_response_20260615_eaf_figure/`
-
-These folders include figures, tables, logs, and writing materials referenced in the revision response.
+Revision-specific analyses are maintained under `experiments/revision/`. Generated outputs are created at runtime and are not tracked as part of the repository snapshot.
 
 ## Citation and archival release
 
