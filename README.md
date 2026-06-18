@@ -15,9 +15,7 @@ Code, evaluation scripts, configuration files, revision-analysis scripts, and re
 - `experiments/revision/`: scripts for revision experiments (EAF analysis, robustness, efficiency).
 - `checkpoints/README.md`: checkpoint manifest and placement rules.
 
-## Why DAMD is useful
-
-DAMD targets subtle industrial defect detection under multimodal RGB-3D input. It stays lightweight because the main paper setting does not require a heavy pretrained 3D backbone during inference, improves subtle defect localization on public datasets, exposes interpretable modality-weight behavior through the EAF analysis, and can be reproduced on public MVTec 3D-AD and Eyecandies data with the scripts and configs provided here.
+ 
 
 ## Environment setup
 
