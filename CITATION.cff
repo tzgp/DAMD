@@ -6,8 +6,8 @@ version: 1.0.0
 license: MIT
 abstract: "Official DAMD implementation with reproducibility scripts, configs, revision analyses, and evaluation utilities for MVTec 3D-AD and Eyecandies."
 authors:
-  - family-names: Tao
-    given-names: Zhi-Guo
+  - family-names: Zhu
+    given-names: Guiping
 affiliation: "Please update author metadata before public archival release"
 keywords:
   - anomaly detection
