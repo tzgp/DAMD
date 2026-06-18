@@ -602,7 +602,7 @@ def _write_run_instructions(output_dir: Path, args, missing_paths: List[str]) ->
             "",
             "## Command template",
             "```bash",
-            "python experiments/revision/run_eaf_analysis.py --dataset mvtec3d --data_root /path/to/mvtec3d --output_dir revision_materials/eaf_analysis",
+                "python experiments/revision/run_eaf_analysis.py --dataset mvtec3d --data_root /path/to/mvtec3d --output_dir outputs/revision/eaf_analysis",
             "```",
             "",
             "## Current resolved arguments",
@@ -847,7 +847,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--dataset_type", default="mvtec3d", choices=["mvtec3d", "eyecandies"])
     parser.add_argument("--data_root", default=str(default_dataset_root("mvtec3d")))
     parser.add_argument("--dataset_path", default=str(default_dataset_root("mvtec3d")))
-    parser.add_argument("--output_dir", default="revision_materials/eaf_analysis")
+    parser.add_argument("--output_dir", default="outputs/revision/eaf_analysis")
     parser.add_argument("--method_name", default="DINO+FPFH+add+late")
     parser.add_argument("--categories", default="")
     parser.add_argument("--img_size", default=224, type=int)
