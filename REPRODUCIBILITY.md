@@ -49,7 +49,10 @@ bash scripts/reproduce_eyecandies.sh /path/to/Eyecandies /path/to/eyecandies_pre
 To build the public training memory-bank artifacts without running evaluation:
 
 ```bash
-python scripts/build_memory_bank.py --config configs/mvtec3d_reproduction.yaml --skip-preprocess
+python scripts/build_memory_bank.py \
+  --config configs/mvtec3d_reproduction.yaml \
+  --dataset-root /path/to/mvtec3d \
+  --skip-preprocess
 ```
 
 This reuses the documented DAMD feature-extraction path and writes the saved training feature tensors to the configured `save_feature_path`.

@@ -99,7 +99,10 @@ python scripts/run_reproduction.py --config configs/eyecandies_reproduction.yaml
 To publicly expose the training memory-bank construction path, the repository provides a dedicated wrapper that reuses the same config and feature-extraction pipeline while skipping evaluation:
 
 ```bash
-python scripts/build_memory_bank.py --config configs/mvtec3d_reproduction.yaml --skip-preprocess
+python scripts/build_memory_bank.py \
+  --config configs/mvtec3d_reproduction.yaml \
+  --dataset-root /path/to/mvtec3d \
+  --skip-preprocess
 ```
 
 This command saves per-sample training feature tensors under the configured `save_feature_path` (for example `outputs/feature_cache/mvtec3d`) and is intended as the public memory-bank construction artifact for reproducibility.
