@@ -12,6 +12,18 @@ import yaml
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
+DEFAULT_CHECKPOINTS = {
+    "fusion_module_path": "checkpoints/uff_pretrain.pth",
+}
+
+
+DEFAULT_RUN_ARGS = {
+    "xyz_backbone_name": "Point_MAE",
+    "ocsvm_nu": 0.5,
+    "ocsvm_maxiter": 1000,
+}
+
+
 def _resolve(path_value: str | None) -> Path | None:
     if not path_value:
         return None
@@ -95,7 +107,7 @@ def main() -> None:
 
     dataset_path = _preprocess(dataset_cfg, log_path, args.skip_preprocess)
     rgb_backbone = _resolve(ckpt_cfg["rgb_backbone_checkpoint"])
-    fusion_ckpt = _resolve(ckpt_cfg["fusion_module_path"])
+    fusion_ckpt = _resolve(ckpt_cfg.get("fusion_module_path", DEFAULT_CHECKPOINTS["fusion_module_path"]))
     if rgb_backbone is None or not rgb_backbone.exists():
         raise FileNotFoundError(f"Missing RGB backbone checkpoint: {rgb_backbone}")
 
@@ -113,7 +125,7 @@ def main() -> None:
         "--memory_bank", str(run_cfg["memory_bank"]),
         "--img_size", str(run_cfg["img_size"]),
         "--rgb_backbone_name", str(run_cfg["rgb_backbone_name"]),
-        "--xyz_backbone_name", str(run_cfg["xyz_backbone_name"]),
+        "--xyz_backbone_name", str(run_cfg.get("xyz_backbone_name", DEFAULT_RUN_ARGS["xyz_backbone_name"])),
         "--group_size", str(run_cfg["group_size"]),
         "--num_group", str(run_cfg["num_group"]),
         "--xyz_s_lambda", str(run_cfg["xyz_s_lambda"]),
@@ -124,8 +136,8 @@ def main() -> None:
         "--fusion_smap_lambda", str(run_cfg["fusion_smap_lambda"]),
         "--coreset_eps", str(run_cfg["coreset_eps"]),
         "--f_coreset", str(run_cfg["f_coreset"]),
-        "--ocsvm_nu", str(run_cfg["ocsvm_nu"]),
-        "--ocsvm_maxiter", str(run_cfg["ocsvm_maxiter"]),
+        "--ocsvm_nu", str(run_cfg.get("ocsvm_nu", DEFAULT_RUN_ARGS["ocsvm_nu"])),
+        "--ocsvm_maxiter", str(run_cfg.get("ocsvm_maxiter", DEFAULT_RUN_ARGS["ocsvm_maxiter"])),
     ]
     if run_cfg.get("use_uff"):
         command.append("--use_uff")

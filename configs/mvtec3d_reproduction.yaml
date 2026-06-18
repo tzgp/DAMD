@@ -6,7 +6,6 @@ dataset:
 
 checkpoints:
   rgb_backbone_checkpoint: checkpoints/dino_vitbase8_pretrain.pth
-  fusion_module_path: checkpoints/uff_pretrain.pth
 
 outputs:
   results_dir: results/mvtec3d
@@ -20,7 +19,6 @@ run:
   memory_bank: single
   img_size: 224
   rgb_backbone_name: vit_base_patch8_224_dino
-  xyz_backbone_name: Point_MAE
   use_uff: false
   use_trans: true
   use_ssl: false
@@ -35,5 +33,3 @@ run:
   fusion_smap_lambda: 1.0
   coreset_eps: 0.9
   f_coreset: 0.1
-  ocsvm_nu: 0.5
-  ocsvm_maxiter: 1000
