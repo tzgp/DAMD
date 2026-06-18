@@ -14,6 +14,7 @@ This document collects the exact materials needed to reproduce the DAMD results 
 
 - MVTec 3D-AD: official website, original licensing retained by MVTec.
 - Eyecandies: official website, original licensing retained by Eyecandies.
+- The training/testing split protocol follows the same setup used in M3DM for the corresponding public dataset releases.
 
 ### Checkpoints
 
@@ -27,7 +28,7 @@ See `checkpoints/README.md` for hashes and provenance.
 - `configs/mvtec3d_reproduction.yaml`
 - `configs/eyecandies_reproduction.yaml`
 
-These files record the dataset target, checkpoints, output directories, and the hyperparameters used in the main DAMD evaluation path.
+These files record the dataset target, checkpoints, output directories, and the required hyperparameters used in the main DAMD evaluation path.
 
 ## 4. One-command reproduction
 

@@ -43,7 +43,7 @@ The original experiments were run with Python 3.8.20, torch 1.10.0, torchvision 
 ### MVTec 3D-AD
 
 - Official source: <https://www.mvtec.com/company/research/datasets/mvtec-3d-ad>
-- DAMD uses the official category split distributed by the dataset authors.
+- DAMD uses the same training/testing split protocol as M3DM on the official MVTec 3D-AD categories.
 - Preprocessing is performed in place:
 
 ```bash
@@ -53,7 +53,7 @@ python utils/preprocessing.py /path/to/mvtec3d
 ### Eyecandies
 
 - Official source: <https://eyecan-ai.github.io/eyecandies/>
-- DAMD uses the official train/test split distributed by the dataset authors.
+- DAMD uses the same training/testing split protocol as M3DM on the official Eyecandies release.
 - Convert the raw release into the DAMD directory layout with:
 
 ```bash
