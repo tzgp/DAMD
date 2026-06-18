@@ -15,6 +15,7 @@ REQUIRED_FILES = [
     "configs/mvtec3d_reproduction.yaml",
     "configs/eyecandies_reproduction.yaml",
     "scripts/run_reproduction.py",
+    "scripts/build_memory_bank.py",
     "scripts/reproduce_mvtec3d.sh",
     "scripts/reproduce_eyecandies.sh",
     "checkpoints/README.md",

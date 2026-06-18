@@ -60,11 +60,21 @@ def run_3d_ads(args):
         elif args.method_name =='DINO+FPFH+add+late':
             model=M3DMlate(args)#实例化模型
             model.fit(cls)#特征提取与构建模板库
+            if args.build_memory_bank_only:
+                print(f"Built memory-bank artifacts for class {cls}")
+                del model
+                print("################################################################################\n\n")
+                continue
             image_rocaucs, pixel_rocaucs, au_pros = model.evaluate(cls)
         else:
             model = M3DM(args)
             get_memory_comparison()
             model.fit(cls)
+            if args.build_memory_bank_only:
+                print(f"Built memory-bank artifacts for class {cls}")
+                del model
+                print("################################################################################\n\n")
+                continue
             print("fit")
             get_memory_comparison()
             image_rocaucs, pixel_rocaucs, au_pros = model.evaluate(cls)
@@ -81,6 +91,9 @@ def run_3d_ads(args):
         del image_rocaucs, pixel_rocaucs, au_pros
         print("################################################################################\n\n")
         get_memory_comparison()
+    if args.build_memory_bank_only:
+        print("Memory-bank construction completed for all classes.")
+        return
     image_rocaucs_df['Mean'] = round(image_rocaucs_df.iloc[:, 1:].mean(axis=1),3)
     pixel_rocaucs_df['Mean'] = round(pixel_rocaucs_df.iloc[:, 1:].mean(axis=1),3)
     au_pros_df['Mean'] = round(au_pros_df.iloc[:, 1:].mean(axis=1),3)
@@ -127,6 +140,8 @@ if __name__ == '__main__':
                         help='Checkpoints for fusion module.')
     parser.add_argument('--save_feature', default=False, action='store_true',
                         help='Save feature for training fusion block.')
+    parser.add_argument('--build_memory_bank_only', default=False, action='store_true',
+                        help='Build and save training memory-bank artifacts without running evaluation.')
     parser.add_argument('--use_uff', default=False, action='store_true',
                         help='Use UFF module.')
     parser.add_argument('--use_trans', default=True, action='store_true',
