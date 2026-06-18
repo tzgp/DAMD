@@ -16,6 +16,16 @@ def main() -> None:
     )
     parser.add_argument("--config", required=True, help="Path to a YAML config file under configs/.")
     parser.add_argument("--skip-preprocess", action="store_true")
+    parser.add_argument(
+        "--dataset-root",
+        default="",
+        help="Override the dataset root used by the config (for mvtec3d this is the processed dataset path; for eyecandies this is the raw dataset root).",
+    )
+    parser.add_argument(
+        "--processed-root",
+        default="",
+        help="Override the processed dataset root for eyecandies memory-bank construction.",
+    )
     args = parser.parse_args()
 
     config_path = _resolve(args.config)
@@ -33,6 +43,14 @@ def main() -> None:
     if feature_cache is None or log_path is None:
         raise ValueError("save_feature_path and memory_bank_log_path must resolve to valid paths")
     feature_cache.mkdir(parents=True, exist_ok=True)
+
+    if args.dataset_root:
+        if dataset_cfg["name"] == "mvtec3d":
+            os.environ["DAMD_MVTEC3D_ROOT"] = args.dataset_root
+        else:
+            os.environ["DAMD_EYECANDIES_ROOT"] = args.dataset_root
+    if args.processed_root:
+        os.environ["DAMD_EYECANDIES_PREPROCESSED_ROOT"] = args.processed_root
 
     dataset_path = _preprocess(dataset_cfg, log_path, args.skip_preprocess)
     rgb_backbone = _resolve(ckpt_cfg["rgb_backbone_checkpoint"])
