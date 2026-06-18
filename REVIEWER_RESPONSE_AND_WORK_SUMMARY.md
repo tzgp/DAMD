@@ -40,6 +40,10 @@ The reviewer requests were processed in order with a focus on reproducibility an
    - Re-ran the active DAMD path on the original full MVTec 3D-AD dataset in the original `damd` environment.
    - Observed full-run aggregate results: `I-AUROC = 0.954`, `P-AUROC = 0.993`, `AU-PRO = 0.969`.
 
+9. **Added a public memory-bank construction script**
+   - Added `scripts/build_memory_bank.py` as a public wrapper around the existing DAMD feature-saving path.
+   - The script reuses the same config-driven setup and constructs training memory-bank artifacts without requiring a full evaluation run.
+
 ## 2. What still requires manual action
 
 The following items cannot be completed automatically from the server alone and still require maintainer action:
@@ -96,6 +100,8 @@ After the DOI is minted, replace the last sentence with:
 > **Response regarding reuse value:** We also agree that the reuse value of the paper should be made clearer. To address this, we prepared wording that highlights that DAMD is lightweight, does not rely on a heavy pretrained 3D backbone in the main setting, improves subtle defect detection, provides interpretable modality weights, and is reproducible on public datasets. These points can be incorporated into the Introduction or Conclusion in the revised manuscript.
 
 > **Response on implementation cleanup and verification:** We additionally removed targeted runtime debug prints that exposed density arrays, entropy values, and fusion-weight outputs in the active DAMD evaluation path, and then reran the full MVTec 3D-AD evaluation in the original DAMD environment on the full dataset. The run completed successfully across all 10 categories, confirming that the cleanup did not break the active evaluation pipeline.
+
+> **Response on public memory-bank construction:** Following the reviewer’s suggestion, we also added a public memory-bank construction script to the repository. This script exposes the DAMD training feature-cache generation path in a standalone, documented form, so that users can construct the published memory-bank artifacts directly from the released code and configuration files.
 
 ## 5. Recommended next manual steps
 

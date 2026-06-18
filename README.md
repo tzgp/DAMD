@@ -9,6 +9,7 @@ Code, evaluation scripts, configuration files, and reproducibility documentation
 - `main.py`: primary evaluation entrypoint for DAMD.
 - `configs/`: reproducibility configs for MVTec 3D-AD and Eyecandies.
 - `scripts/run_reproduction.py`: one-command reproduction wrapper.
+- `scripts/build_memory_bank.py`: public memory-bank construction wrapper.
 - `scripts/reproduce_mvtec3d.sh` and `scripts/reproduce_eyecandies.sh`: dataset-specific wrappers.
 - `REPRODUCIBILITY.md`: exact reproduction workflow and checklist.
 - `experiments/revision/`: scripts for revision experiments (EAF analysis, robustness, efficiency).
@@ -92,6 +93,16 @@ These wrappers validate required paths, optionally preprocess the data, and laun
 python scripts/run_reproduction.py --config configs/mvtec3d_reproduction.yaml
 python scripts/run_reproduction.py --config configs/eyecandies_reproduction.yaml
 ```
+
+## Memory-bank construction
+
+To publicly expose the training memory-bank construction path, the repository provides a dedicated wrapper that reuses the same config and feature-extraction pipeline while skipping evaluation:
+
+```bash
+python scripts/build_memory_bank.py --config configs/mvtec3d_reproduction.yaml --skip-preprocess
+```
+
+This command saves per-sample training feature tensors under the configured `save_feature_path` (for example `outputs/feature_cache/mvtec3d`) and is intended as the public memory-bank construction artifact for reproducibility.
 
 ## Main evaluation command
 
