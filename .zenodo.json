@@ -1,7 +1,7 @@
 {
   "title": "DAMD: Density-Augmented RGB-3D Fusion for Subtle Industrial Defect Detection",
   "upload_type": "software",
-  "description": "Official implementation of DAMD: Density-Augmented RGB-3D Fusion for Subtle Industrial Defect Detection.",
+  "description": "Official implementation of DAMD with reproducibility scripts, configuration files, memory-bank construction scripts, and evaluation utilities for MVTec 3D-AD and Eyecandies.",
   "license": "mit",
   "access_right": "open",
   "language": "eng",
@@ -10,14 +10,21 @@
     {
       "name": "Zhu, Guiping",
       "affiliation": "Beijing Jiaotong University"
+    },
+    {
+      "name": "Ji, Zhenyan",
+      "affiliation": "Beijing Jiaotong University"
     }
   ],
   "keywords": [
-    "anomaly detection",
-    "industrial inspection",
-    "mvtec 3d-ad",
-    "eyecandies",
-    "multimodal learning"
+    "RGB-3D anomaly detection",
+    "industrial defect localization",
+    "multimodal visual inspection",
+    "3D point cloud descriptors",
+    "density-augmented representation",
+    "adaptive multimodal fusion",
+    "MVTec 3D-AD",
+    "Eyecandies"
   ],
   "related_identifiers": [
     {
