@@ -8,7 +8,7 @@ Code, evaluation scripts, configuration files, and reproducibility documentation
 
 The existing DAMD framework figure from the manuscript is provided below as a graphical-abstract-style overview of the released pipeline.
 
-![DAMD graphical abstract and pipeline overview](assets/graphical_abstract.png)
+![DAMD graphical abstract and pipeline overview](assets/graphical_abstract.pdf)
 
 ## Why DAMD is useful
 
