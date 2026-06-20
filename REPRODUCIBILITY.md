@@ -91,38 +91,3 @@ python scripts/check_reproducibility.py
 ```
 
 This checks that the expected reproducibility documents, configs, scripts, and archival metadata files are present.
-
-## 8. Zenodo DOI release steps
-
-The repository now contains release metadata, but DOI minting is still a manual account-level step:
-
-1. Link the GitHub repository to Zenodo.
-2. Create a GitHub release (for example `v1.0.0`).
-3. Let Zenodo archive the release and mint the DOI.
-4. Add the DOI to the README and manuscript availability statement.
-
-## 9. Reproducibility checklist
-
-- [x] Public code repository
-- [x] Configuration files
-- [x] Evaluation entrypoint
-- [x] Preprocessing scripts
-- [x] Exact environment snapshot
-- [x] Checkpoint manifest and checksums
-- [x] One-command reproduction wrappers
-- [x] Reviewer-facing summary file
-- [x] Public memory-bank construction script
-- [x] Graphical abstract / pipeline figure in the repository
-- [x] Public benchmark snapshot table in the repository
-- [ ] DOI minted and inserted into manuscript after release
-
-## 10. Expected results matrix
-
-The following matrix summarizes the currently verified public release targets:
-
-| Workflow | Command | Expected artifact(s) | Expected result |
-|:--|:--|:--|:--|
-| Memory-bank construction (MVTec 3D-AD) | `python scripts/build_memory_bank.py --config configs/mvtec3d_reproduction.yaml --dataset-root /path/to/mvtec3d --skip-preprocess` | files under `outputs/feature_cache/mvtec3d/` | training feature-cache / memory-bank artifacts are generated successfully |
-| Full MVTec 3D-AD reproduction | `bash scripts/reproduce_mvtec3d.sh /path/to/mvtec3d` or `python scripts/run_reproduction.py --config configs/mvtec3d_reproduction.yaml --skip-preprocess` | `results/mvtec3d/image_rocauc_results.md`, `pixel_rocauc_results.md`, `aupro_results.md`, `m3dm_5_DoubleRGBFPFHFeatures_add_results.csv` | mean I-AUROC `0.954`, mean P-AUROC `0.993`, mean AU-PRO `0.969` |
-
-These values correspond to the verified released DAMD configuration on MVTec 3D-AD in the tested environment.
