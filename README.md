@@ -81,6 +81,11 @@ Place the required checkpoints under `checkpoints/`:
 - `checkpoints/dino_vitbase8_pretrain.pth`
 - `checkpoints/uff_pretrain.pth` (only required when UFF-based runs are enabled)
 
+Public release assets:
+
+- `dino_vitbase8_pretrain.pth`: <https://github.com/tzgp/DAMD/releases/download/v1.0.0/dino_vitbase8_pretrain.pth>
+- `uff_pretrain.pth`: <https://github.com/tzgp/DAMD/releases/download/v1.0.0/uff_pretrain.pth>
+
 See `checkpoints/README.md` and `checkpoints/checksums.sha256` for provenance and checksum details.
 
 ## One-command reproduction
@@ -164,6 +169,7 @@ The repository includes release metadata for Zenodo and GitHub citation support:
 
 - `CITATION.cff`
 - `.zenodo.json`
+- GitHub release: <https://github.com/tzgp/DAMD/releases/tag/v1.0.0>
 
 After creating a GitHub release, Zenodo can mint a DOI-backed archival snapshot. The DOI should then be added to the manuscript and README.
 

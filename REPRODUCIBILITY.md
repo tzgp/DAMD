@@ -21,6 +21,11 @@ This document collects the exact materials needed to reproduce the DAMD results 
 - `checkpoints/dino_vitbase8_pretrain.pth`
 - `checkpoints/uff_pretrain.pth` when UFF is enabled
 
+Public download URLs:
+
+- <https://github.com/tzgp/DAMD/releases/download/v1.0.0/dino_vitbase8_pretrain.pth>
+- <https://github.com/tzgp/DAMD/releases/download/v1.0.0/uff_pretrain.pth>
+
 See `checkpoints/README.md` for hashes and provenance.
 
 ## 3. Config files
