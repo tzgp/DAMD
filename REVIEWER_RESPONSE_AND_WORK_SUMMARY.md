@@ -44,6 +44,11 @@ The reviewer requests were processed in order with a focus on reproducibility an
    - Added `scripts/build_memory_bank.py` as a public wrapper around the existing DAMD feature-saving path.
    - The script reuses the same config-driven setup and constructs training memory-bank artifacts without requiring a full evaluation run.
 
+10. **Added repository-visible reuse and visibility artifacts**
+   - Added the manuscript framework figure to the repository as a graphical-abstract-style pipeline overview.
+   - Added a public benchmark snapshot table to the README.
+   - Added an expected-results matrix to `REPRODUCIBILITY.md`.
+
 ## 2. What still requires manual action
 
 The following items cannot be completed automatically from the server alone and still require maintainer action:
@@ -98,6 +103,8 @@ After the DOI is minted, replace the last sentence with:
 > **Response on verification scope:** To avoid overclaiming, we have described the current repository update as a strengthened reproducibility package with validated entry points, portable defaults, and explicit environment/configuration support. We do not claim in the repository text that every manuscript result has already been rerun from a clean public environment unless and until those end-to-end verification logs are also released.
 
 > **Response regarding reuse value:** We also agree that the reuse value of the paper should be made clearer. To address this, we prepared wording that highlights that DAMD is lightweight, does not rely on a heavy pretrained 3D backbone in the main setting, improves subtle defect detection, provides interpretable modality weights, and is reproducible on public datasets. These points can be incorporated into the Introduction or Conclusion in the revised manuscript.
+
+> **Response on visibility-oriented artifacts:** We also added the framework figure from the manuscript to the repository as a graphical-abstract-style pipeline overview, included a public benchmark snapshot table in the README, and expanded the reproducibility document with an expected-results matrix. These additions are intended to make the method easier to understand, reuse, and benchmark.
 
 > **Response on implementation cleanup and verification:** We additionally removed targeted runtime debug prints that exposed density arrays, entropy values, and fusion-weight outputs in the active DAMD evaluation path, and then reran the full MVTec 3D-AD evaluation in the original DAMD environment on the full dataset. The run completed successfully across all 10 categories, confirming that the cleanup did not break the active evaluation pipeline.
 
