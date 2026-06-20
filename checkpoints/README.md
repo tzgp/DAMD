@@ -1,7 +1,6 @@
-# Checkpoint manifest
+# Checkpoint 
 
-This directory is the expected location for external checkpoints used by DAMD.
-
+Download from https://github.com/nomewang/M3DM
 ## Required files
 
 1. `dino_vitbase8_pretrain.pth`
@@ -19,14 +18,3 @@ Copy or download the files into `checkpoints/` so that the following paths exist
 
 - `checkpoints/dino_vitbase8_pretrain.pth`
 - `checkpoints/uff_pretrain.pth`
-
-The code now resolves these paths relative to the repository root by default. You may also override them with:
-
-- `--rgb_backbone_checkpoint`
-- `--fusion_module_path`
-- `DAMD_RGB_BACKBONE_CHECKPOINT`
-- `DAMD_FUSION_CHECKPOINT`
-
-## Archival recommendation
-
-For the public release, store author-generated checkpoints in a DOI-backed archival release such as Zenodo or GitHub Releases linked to Zenodo. Once a DOI is minted, add the permanent URL here and in the README.
