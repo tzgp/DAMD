@@ -4,6 +4,16 @@ This repository contains the official implementation used in the paper under rev
 
 Code, evaluation scripts, configuration files, and reproducibility documentation are publicly available in this repository. Zenodo archival metadata is provided via `CITATION.cff` and `.zenodo.json`; after a GitHub release is created, a DOI-backed archival snapshot can be minted and cited in the manuscript.
 
+## Graphical abstract / pipeline overview
+
+The existing DAMD framework figure from the manuscript is provided below as a graphical-abstract-style overview of the released pipeline.
+
+![DAMD graphical abstract and pipeline overview](assets/graphical_abstract.png)
+
+## Why DAMD is useful
+
+DAMD is useful for industrial anomaly detection because it remains lightweight, avoids dependence on a heavy pretrained 3D backbone in the main evaluation setting, improves subtle defect detection on public RGB-3D benchmarks, provides interpretable modality-weight behavior through entropy-aware fusion analysis, and can be reproduced on public datasets using the released code, scripts, and configuration files.
+
 ## What is included
 
 - `main.py`: primary evaluation entrypoint for DAMD.
@@ -106,6 +116,16 @@ python scripts/build_memory_bank.py \
 ```
 
 This command saves per-sample training feature tensors under the configured `save_feature_path` (for example `outputs/feature_cache/mvtec3d`) and is intended as the public memory-bank construction artifact for reproducibility.
+
+## Public benchmark snapshot
+
+The table below is maintained in a leaderboard-style format for the released DAMD configuration on public data. The current verified public snapshot is:
+
+| Dataset | Split protocol | Entry point | Memory-bank artifact | I-AUROC | P-AUROC | AU-PRO |
+|:--|:--|:--|:--|--:|--:|--:|
+| MVTec 3D-AD | Same setup as M3DM | `configs/mvtec3d_reproduction.yaml` | `scripts/build_memory_bank.py` | 0.954 | 0.993 | 0.969 |
+
+Community-facing benchmark extensions can be added in future releases using the same table structure.
 
 ## Main evaluation command
 

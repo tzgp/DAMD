@@ -10,6 +10,7 @@ REQUIRED_FILES = [
     "README.md",
     "REPRODUCIBILITY.md",
     "REVIEWER_RESPONSE_AND_WORK_SUMMARY.md",
+    "assets/graphical_abstract.png",
     "environment.yml",
     "requirements-lock.txt",
     "configs/mvtec3d_reproduction.yaml",
