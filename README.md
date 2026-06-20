@@ -8,7 +8,7 @@ Code, evaluation scripts, configuration files, and reproducibility documentation
 
 The existing DAMD framework figure from the manuscript is provided below as a graphical-abstract-style overview of the released pipeline.
 
-![DAMD graphical abstract and pipeline overview](assets/graphical_abstract.pdf)
+![DAMD graphical abstract and pipeline overview](assets/graphical_abstract.png)
 
 ## Why DAMD is useful
 
@@ -160,19 +160,7 @@ This repository includes:
 - checkpoint manifest and checksums (`checkpoints/`)
 - reproducibility checklist and reviewer-facing summary (`REPRODUCIBILITY.md`, `REVIEWER_RESPONSE_AND_WORK_SUMMARY.md`)
 
-## Revision analysis scripts
 
-Revision-specific analyses are maintained under `experiments/revision/`. Generated outputs are created at runtime and are not tracked as part of the repository snapshot.
-
-## Citation and archival release
-
-The repository includes release metadata for Zenodo and GitHub citation support:
-
-- `CITATION.cff`
-- `.zenodo.json`
-- GitHub release: <https://github.com/tzgp/DAMD/releases/tag/v1.0.0>
-
-After creating a GitHub release, Zenodo can mint a DOI-backed archival snapshot. The DOI should then be added to the manuscript and README.
 
 ## Acknowledgements
 
