@@ -2,7 +2,7 @@
 
 This repository contains the official implementation used in the paper under review at *The Visual Computer*.
 
-Code, evaluation scripts, configuration files, and reproducibility documentation are publicly available in this repository. Zenodo archival metadata is provided via `CITATION.cff` and `.zenodo.json`; after a GitHub release is created, a DOI-backed archival snapshot can be minted and cited in the manuscript.
+Code, evaluation scripts, configuration files, and reproducibility documentation are publicly available in this repository. 　
 
 ## Graphical abstract / pipeline overview
 
@@ -129,7 +129,7 @@ The table below is maintained in a leaderboard-style format for the released DAM
 | Dataset | Split protocol | Entry point | Memory-bank artifact | I-AUROC | P-AUROC | AU-PRO | Status |
 |:--|:--|:--|:--|--:|--:|--:|:--|
 | MVTec 3D-AD | Same setup as M3DM | `configs/mvtec3d_reproduction.yaml` | `scripts/build_memory_bank.py` | 0.954 | 0.993 | 0.969 | fresh-clone verified |
-| Eyecandies | Same setup as M3DM | `configs/eyecandies_reproduction.yaml` | `scripts/build_memory_bank.py` | 0.899 | 0.980 | 0.900 | historical server run |
+| Eyecandies | Same setup as M3DM | `configs/eyecandies_reproduction.yaml` | `scripts/build_memory_bank.py` | 0.904 | 0.981 | 0.903 | historical server run |
 
 Community-facing benchmark extensions can be added in future releases using the same table structure.
 
