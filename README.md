@@ -35,7 +35,6 @@ We recommend reproducing the experiments with the exact environment captured fro
 
 ```bash
 conda env create -f environment.yml
-conda activate damd
 ```
 
 ### Option B: Pip lockfile
@@ -126,10 +125,10 @@ This command saves per-sample training feature tensors under the configured `sav
 
 The table below is maintained in a leaderboard-style format for the released DAMD configuration on public data. The current verified public snapshot is:
 
-| Dataset | Split protocol | Entry point | Memory-bank artifact | I-AUROC | P-AUROC | AU-PRO | Status |
+| Dataset | Split protocol | Entry point | Memory-bank artifact | I-AUROC | P-AUROC | AU-PRO |
 |:--|:--|:--|:--|--:|--:|--:|:--|
-| MVTec 3D-AD | Same setup as M3DM | `configs/mvtec3d_reproduction.yaml` | `scripts/build_memory_bank.py` | 0.954 | 0.993 | 0.969 | fresh-clone verified |
-| Eyecandies | Same setup as M3DM | `configs/eyecandies_reproduction.yaml` | `scripts/build_memory_bank.py` | 0.904 | 0.981 | 0.903 | historical server run |
+| MVTec 3D-AD | Same setup as M3DM | `configs/mvtec3d_reproduction.yaml` | `scripts/build_memory_bank.py` | 0.954 | 0.993 | 0.969 |
+| Eyecandies | Same setup as M3DM | `configs/eyecandies_reproduction.yaml` | `scripts/build_memory_bank.py` | 0.904 | 0.981 | 0.903 | 
 
 Community-facing benchmark extensions can be added in future releases using the same table structure.
 
