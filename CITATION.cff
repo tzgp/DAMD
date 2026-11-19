@@ -2,7 +2,7 @@ cff-version: 1.2.0
 title: "DAMD: Density-Augmented RGB-3D Fusion for Subtle Industrial Defect Detection"
 message: "If you use this repository, please cite the paper and the software release."
 type: software
-version: 1.0.0
+version: 1.0.1
 license: MIT
 abstract: "Official implementation of DAMD with reproducibility scripts, configuration files, memory-bank construction scripts, and evaluation utilities for MVTec 3D-AD and Eyecandies."
 authors:

@@ -38,6 +38,13 @@ def _load_config(path: Path) -> dict:
         return yaml.safe_load(handle)
 
 
+def _append_run_overrides(command: list[str], run_cfg: dict) -> None:
+    if run_cfg.get("density_scales") is not None:
+        command.extend(["--density_scales", ",".join(map(str, run_cfg["density_scales"]))])
+    if run_cfg.get("random_state") is not None:
+        command.extend(["--random_state", str(run_cfg["random_state"])])
+
+
 def _run(command: list[str], log_path: Path) -> None:
     print("[RUN]", " ".join(command))
     log_path.parent.mkdir(parents=True, exist_ok=True)
@@ -148,6 +155,7 @@ def main() -> None:
     if run_cfg.get("save_preds", True):
         command.append("--save_preds")
 
+    _append_run_overrides(command, run_cfg)
     _run(command, log_path)
 
 

@@ -30,10 +30,13 @@ See `checkpoints/README.md` for hashes and provenance.
 
 ## 3. Config files
 
-- `configs/mvtec3d_reproduction.yaml`
-- `configs/eyecandies_reproduction.yaml`
+| Dataset | MDFE density scales (β) | Configuration |
+|:--|:--|:--|
+| MVTec 3D-AD | 0.03, 0.07, 0.11, 0.15 | `configs/mvtec3d_reproduction.yaml` |
+| Eyecandies | 0.02, 0.03, 0.04, 0.05 | `configs/eyecandies_reproduction.yaml` |
 
 These files record the dataset target, checkpoints, output directories, and the required hyperparameters used in the main DAMD evaluation path.
+Both YAML entry points pass `run.density_scales` and `run.random_state` to `main.py`. Direct `main.py` runs use the dataset default unless `--density_scales` supplies four comma-separated values. The log records the dataset and effective scales.
 
 ## 4. One-command reproduction
 
@@ -70,6 +73,7 @@ python main.py \
   --dataset_type mvtec3d \
   --dataset_path /path/to/mvtec3d \
   --rgb_backbone_checkpoint checkpoints/dino_vitbase8_pretrain.pth \
+  --random_state 0 \
   --results_dir results/mvtec3d
 ```
 

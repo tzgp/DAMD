@@ -1,11 +1,6 @@
 import argparse
-from m3dm_runner import M3DM
 #from m3dm_runnerTrans import M3DMTrans
 #from m3dmmetric_runner import M3DMmetric
-from m3dm_runnerlate import M3DMlate
-from dataset import eyecandies_classes, mvtec3d_classes
-import pandas as pd
-from SSLspot_runner import SSLspot
 #from metric_learn import Covariance,RCA
 # from m3dmrca_runner import M3DMRCA
 # from m3dmpca_runner import M3DMPCA
@@ -14,6 +9,7 @@ import psutil
 import os
 from pathlib import Path
 
+from density_config import resolve_density_scales
 from path_defaults import (
     default_dataset_root,
     default_feature_cache,
@@ -42,6 +38,13 @@ def get_memory_comparison():
 
 
 def run_3d_ads(args):
+    import pandas as pd
+
+    from dataset import eyecandies_classes, mvtec3d_classes
+    from m3dm_runner import M3DM
+    from m3dm_runnerlate import M3DMlate
+    from SSLspot_runner import SSLspot
+
     results_dir = Path(args.results_dir)
     results_dir.mkdir(parents=True, exist_ok=True)
     if args.dataset_type=='eyecandies':
@@ -119,7 +122,9 @@ def run_3d_ads(args):
     combined_df = pd.concat([image_rocaucs_df, pixel_rocaucs_df, au_pros_df], ignore_index=True)
     # 将合并后的DataFrame保存为CSV文件
     combined_df.to_csv(results_dir / 'm3dm_5_DoubleRGBFPFHFeatures_add_results.csv', index=False)
-if __name__ == '__main__':
+
+
+def main(argv=None):
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('--method_name', default='DINO+Point_MAE+Fusion', type=str,
                         choices=['DINO', 'SSLspot','Point_MAE', 'Fusion', 'DINO+Point_MAE', 'DINO+Point_MAE+Fusion', 'DINO+Point_MAE+add','DINO+FPFH+add+PCA','DINO+FPFH+add','DINO+FPFH+add+late','DINO+FPFH','DINO+FPFH+add+metric','DINO+FPFH+add+RCA','DINO+FPFH+add+DIC','DINO+FPFH+add+Trans','FPFH','SIFT','HOG','WideRGB','DINO+FPFH+Fusion'],
@@ -166,6 +171,8 @@ if __name__ == '__main__':
     #                     help='Save feature for training fusion block.')
     parser.add_argument('--dataset_type', default='mvtec3d', type=str, choices=['mvtec3d', 'eyecandies'],
                         help='Dataset type for training or testing')
+    parser.add_argument('--density_scales', metavar='B1,B2,B3,B4',
+                        help='MDFE radius multipliers for DAMD; defaults to the dataset setting.')
     parser.add_argument('--dataset_path', default=str(default_dataset_root('mvtec3d')), type=str,
                         help='Dataset store path')
     parser.add_argument('--save_feature_path', default=str(default_feature_cache('mvtec3d')), type=str,
@@ -200,5 +207,16 @@ if __name__ == '__main__':
                         help='ocsvm maxiter')
     parser.add_argument('--rm_zero_for_project', default=False, action='store_true',
                         help='Save predicts results.')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
+    try:
+        args.density_scales = resolve_density_scales(args.dataset_type, args.density_scales)
+    except ValueError as exc:
+        parser.error(f'--density_scales: {exc}')
+    if args.method_name == 'DINO+FPFH+add+late':
+        scales = ','.join(map(str, args.density_scales))
+        print(f'{args.dataset_type}: density_scales={scales}', flush=True)
     run_3d_ads(args)
+
+
+if __name__ == '__main__':
+    main()

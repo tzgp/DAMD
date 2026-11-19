@@ -2,6 +2,7 @@ print("all合并")
 
 #乘以指数再合并
 import torch
+from density_config import resolve_density_scales
 from feature_extractors.features import Features
 from utils.mvtec3d_util import *
 import numpy as np
@@ -210,7 +211,8 @@ class DoubleRGBFPFHFeatures_add_late(Features):
                 )
             )
             # 2. 计算FPFH特征 (33维)
-            pcd_fpfh = o3d.registration.compute_fpfh_feature(
+            registration = o3d.registration if hasattr(o3d, "registration") else o3d.pipelines.registration
+            pcd_fpfh = registration.compute_fpfh_feature(
                 o3d_pc,
                 o3d.geometry.KDTreeSearchParamHybrid(
                     radius=radius_feature, max_nn=100
@@ -223,19 +225,23 @@ class DoubleRGBFPFHFeatures_add_late(Features):
         """densities"""
         points = np.asarray(o3d_pc.points)
         kdtree = o3d.geometry.KDTreeFlann(o3d_pc)
+        density_scales = getattr(self.args, "density_scales", None)
+        if density_scales is None:
+            density_scales = resolve_density_scales(getattr(self.args, "dataset_type", "mvtec3d"))
+        r1, r2, r3, r4 = (voxel_size * scale for scale in density_scales)
         densities = np.zeros(len(points))
         densities2 = np.zeros(len(points))
         densities3 = np.zeros(len(points))
         densities4 = np.zeros(len(points))
         # densities5 = np.zeros(len(points))
         for i in range(len(points)):
-            [k, idx, _] = kdtree.search_radius_vector_3d(o3d_pc.points[i], voxel_size * 0.03)
+            [k, idx, _] = kdtree.search_radius_vector_3d(o3d_pc.points[i], r1)
             densities[i] = k  # 邻域内点的数量作为密度
-            [k2, idx, _] = kdtree.search_radius_vector_3d(o3d_pc.points[i], voxel_size * 0.07)
+            [k2, idx, _] = kdtree.search_radius_vector_3d(o3d_pc.points[i], r2)
             densities2[i] = k2  # 邻域内点的数量作为密度
-            [k3, idx, _] = kdtree.search_radius_vector_3d(o3d_pc.points[i], voxel_size * 0.11)
+            [k3, idx, _] = kdtree.search_radius_vector_3d(o3d_pc.points[i], r3)
             densities3[i] = k3  # 邻域内点的数量作为密度
-            [k4, idx, _] = kdtree.search_radius_vector_3d(o3d_pc.points[i], voxel_size * 0.15)
+            [k4, idx, _] = kdtree.search_radius_vector_3d(o3d_pc.points[i], r4)
             densities4[i] = k4  # 邻域内点的数量作为密度
 
         fpfh_with_density = np.zeros((fpfh.shape[0], fpfh.shape[1] + 4))

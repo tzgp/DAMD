@@ -5,7 +5,7 @@ import os
 import sys
 from pathlib import Path
 
-from run_reproduction import _load_config, _preprocess, _resolve, _run
+from run_reproduction import _append_run_overrides, _load_config, _preprocess, _resolve, _run
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -107,6 +107,7 @@ def main() -> None:
         "--save_feature",
         "--build_memory_bank_only",
     ]
+    _append_run_overrides(command, run_cfg)
     _run(command, log_path)
 
 

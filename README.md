@@ -108,6 +108,13 @@ python scripts/run_reproduction.py --config configs/mvtec3d_reproduction.yaml
 python scripts/run_reproduction.py --config configs/eyecandies_reproduction.yaml
 ```
 
+| Dataset | MDFE density scales (β) | Configuration |
+|:--|:--|:--|
+| MVTec 3D-AD | 0.03, 0.07, 0.11, 0.15 | `configs/mvtec3d_reproduction.yaml` |
+| Eyecandies | 0.02, 0.03, 0.04, 0.05 | `configs/eyecandies_reproduction.yaml` |
+
+The evaluation and memory-bank scripts both use `run.density_scales` and `run.random_state` from the YAML. When calling `main.py` directly, `--dataset_type` selects the density scales and `--density_scales` overrides them. The run log records the effective values.
+
 ## Memory-bank construction
 
 To publicly expose the training memory-bank construction path, the repository provides a dedicated wrapper that reuses the same config and feature-extraction pipeline while skipping evaluation:
@@ -123,12 +130,12 @@ This command saves per-sample training feature tensors under the configured `sav
 
 ## Public benchmark snapshot
 
-The table below is maintained in a leaderboard-style format for the released DAMD configuration on public data. The current verified public snapshot is:
+The table lists the default DAMD results reported in the manuscript.
 
 | Dataset | Split protocol | Entry point | Memory-bank artifact | I-AUROC | P-AUROC | AU-PRO |
 |:--|:--|:--|:--|--:|--:|--:|:--|
 | MVTec 3D-AD | Same setup as M3DM | `configs/mvtec3d_reproduction.yaml` | `scripts/build_memory_bank.py` | 0.954 | 0.993 | 0.969 |
-| Eyecandies | Same setup as M3DM | `configs/eyecandies_reproduction.yaml` | `scripts/build_memory_bank.py` | 0.904 | 0.981 | 0.903 | 
+| Eyecandies | Same setup as M3DM | `configs/eyecandies_reproduction.yaml` | `scripts/build_memory_bank.py` | 0.900 | 0.980 | 0.904 |
 
 Community-facing benchmark extensions can be added in future releases using the same table structure.
 
@@ -142,10 +149,11 @@ python main.py \
   --dataset_type mvtec3d \
   --dataset_path /path/to/mvtec3d \
   --rgb_backbone_checkpoint checkpoints/dino_vitbase8_pretrain.pth \
+  --random_state 0 \
   --results_dir results/mvtec3d
 ```
 
-For Eyecandies, replace `--dataset_type` and `--dataset_path` accordingly.
+For Eyecandies, use `--dataset_type eyecandies`, point `--dataset_path` to the preprocessed data, and set a separate `--results_dir`.
 
 ## Reproducibility artifacts
 
@@ -157,7 +165,7 @@ This repository includes:
 - evaluation entrypoint (`main.py`)
 - revision-analysis scripts (`experiments/revision/`)
 - checkpoint manifest and checksums (`checkpoints/`)
-- reproducibility checklist and reviewer-facing summary (`REPRODUCIBILITY.md`, `REVIEWER_RESPONSE_AND_WORK_SUMMARY.md`)
+- reproducibility guide (`REPRODUCIBILITY.md`)
 
 
 
